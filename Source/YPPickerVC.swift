@@ -22,7 +22,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     var initialStatusBarHidden = false
     weak var imagePickerDelegate: ImagePickerDelegate?
     
-    override open    var prefersStatusBarHidden: Bool {
+    override open var prefersStatusBarHidden: Bool {
         return (shouldHideStatusBar || initialStatusBarHidden) && YPConfig.hidesStatusBar
     }
     
@@ -46,8 +46,8 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = UIColor(r: 247, g: 247, b: 247)
+
+        view.backgroundColor = YPConfig.colors.safeAreaBackgroundColor
         
         delegate = self
         
@@ -201,7 +201,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         vc.didSelectAlbum = { [weak self] album in
             self?.libraryVC?.setAlbum(album)
             self?.setTitleViewWithTitle(aTitle: album.title)
-            self?.dismiss(animated: true, completion: nil)
+            navVC.dismiss(animated: true, completion: nil)
         }
         present(navVC, animated: true, completion: nil)
     }
@@ -234,9 +234,11 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         } else {
             let arrow = UIImageView()
             arrow.image = YPConfig.icons.arrowDownIcon
+            arrow.image = arrow.image?.withRenderingMode(.alwaysTemplate)
+            arrow.tintColor = .ypLabel
             
             let attributes = UINavigationBar.appearance().titleTextAttributes
-            if let attributes = attributes, let foregroundColor = attributes[NSAttributedString.Key.foregroundColor] as? UIColor {
+            if let attributes = attributes, let foregroundColor = attributes[.foregroundColor] as? UIColor {
                 arrow.image = arrow.image?.withRenderingMode(.alwaysTemplate)
                 arrow.tintColor = foregroundColor
             }
@@ -257,8 +259,6 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
         
         label.firstBaselineAnchor.constraint(equalTo: titleView.bottomAnchor, constant: -14).isActive = true
         
-        
-        
         titleView.heightAnchor.constraint(equalToConstant: 40).isActive = true
         navigationItem.titleView = titleView
     }
@@ -269,7 +269,8 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                                                            style: .plain,
                                                            target: self,
                                                            action: #selector(close))
-        
+        navigationItem.leftBarButtonItem?.tintColor = YPConfig.colors.tintColor
+
         switch mode {
         case .library:
             setTitleViewWithTitle(aTitle: libraryVC?.title ?? "")

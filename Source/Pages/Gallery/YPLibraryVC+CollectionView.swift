@@ -12,6 +12,7 @@ extension YPLibraryVC {
     var isLimitExceeded: Bool { return selection.count >= YPConfig.library.maxNumberOfItems }
     
     func setupCollectionView() {
+        v.collectionView.backgroundColor = YPConfig.colors.libraryScreenBackgroundColor
         v.collectionView.dataSource = self
         v.collectionView.delegate = self
         v.collectionView.register(YPLibraryViewCell.self, forCellWithReuseIdentifier: "YPLibraryViewCell")
@@ -118,8 +119,8 @@ extension YPLibraryVC: UICollectionViewDelegate {
                                                                 fatalError("unexpected cell in collection view")
         }
         cell.representedAssetIdentifier = asset.localIdentifier
-        cell.multipleSelectionIndicator.selectionColor = YPConfig.colors.multipleItemsSelectedCircleColor
-                                                            ?? YPConfig.colors.tintColor
+        cell.multipleSelectionIndicator.selectionColor =
+            YPConfig.colors.multipleItemsSelectedCircleColor ?? YPConfig.colors.tintColor
         mediaManager.imageManager?.requestImage(for: asset,
                                    targetSize: v.cellSize(),
                                    contentMode: .aspectFill,
@@ -139,6 +140,14 @@ extension YPLibraryVC: UICollectionViewDelegate {
         
         // Set correct selection number
         if let index = selection.firstIndex(where: { $0.assetIdentifier == asset.localIdentifier }) {
+            let currentSelection = selection[index]
+            if currentSelection.index < 0 {
+                selection[index] = YPLibrarySelection(index: indexPath.row,
+                                                      cropRect: currentSelection.cropRect,
+                                                      scrollViewContentOffset: currentSelection.scrollViewContentOffset,
+                                                      scrollViewZoomScale: currentSelection.scrollViewZoomScale,
+                                                      assetIdentifier: currentSelection.assetIdentifier)
+            }
             cell.multipleSelectionIndicator.set(number: index + 1) // start at 1, not 0
         } else {
             cell.multipleSelectionIndicator.set(number: nil)

@@ -30,7 +30,7 @@ public class YPSelectionsGalleryCell: UICollectionViewCell {
         editSquare.CenterY == editIcon.CenterY
         editSquare.CenterX == editIcon.CenterX
         
-        layer.shadowColor = UIColor(r: 46, g: 43, b: 37).cgColor
+        layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize(width: 4, height: 7)
         layer.shadowRadius = 5
@@ -40,18 +40,27 @@ public class YPSelectionsGalleryCell: UICollectionViewCell {
             i.contentMode = .scaleAspectFill
         }
         editIcon.style { v in
-            v.backgroundColor = .white
+            v.backgroundColor = UIColor.ypSystemBackground
             v.layer.cornerRadius = 16
         }
         editSquare.style { v in
             v.layer.borderWidth = 1
-            v.layer.borderColor = UIColor.black.cgColor
+            v.layer.borderColor = UIColor.ypLabel.cgColor
         }
     }
     
     func setEditable(_ editable: Bool) {
         self.editIcon.isHidden = !editable
         self.editSquare.isHidden = !editable
+    }
+    
+    func addRemoveButton(target: Any?, action: Selector) {
+        let image = YPConfig.icons.removeImage
+        let removeButton = UIButton(frame: CGRect(origin: CGPoint.zero, size: image.size))
+        removeButton.setBackgroundImage(image, for: UIControl.State())
+        sv(removeButton)
+        removeButton.top(12).trailing(12)
+        removeButton.addTarget(target, action: action, for: .touchUpInside)
     }
     
     required public init?(coder aDecoder: NSCoder) {
