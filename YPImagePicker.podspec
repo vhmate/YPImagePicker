@@ -16,5 +16,5 @@ Pod::Spec.new do |s|
   s.dependency 'PryntTrimmerView', '~> 4.0.0'
   s.resources    = ['Resources/*', 'Source/**/*.xib']
   s.description  = "Instagram-like image picker & filters for iOS supporting videos and albums"
-  s.swift_versions = ['3', '4.1', '4.2', '5.0', '5.1', '5.1.2']
+  s.swift_version = '4.2'
 end
