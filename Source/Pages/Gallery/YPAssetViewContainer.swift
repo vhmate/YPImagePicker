@@ -23,11 +23,7 @@ class YPAssetViewContainer: UIView {
     public var isShown = true
     
     private let spinner = UIActivityIndicatorView(style: .white)
-<<<<<<< HEAD
     private var shouldCropToSquare = false
-=======
-    private var shouldCropToSquare = YPConfig.library.isSquareByDefault
->>>>>>> 8b8a8f80adfdaf729dd36483ec66bef1a2f32581
     private var isMultipleSelection = false
 
     override func awakeFromNib() {
