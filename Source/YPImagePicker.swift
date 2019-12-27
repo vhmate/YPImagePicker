@@ -19,16 +19,18 @@ open class YPImagePicker: UINavigationController {
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-    
-    private var _willAppearView: (() -> ())? = nil
-    public func willAppearView(completion: @escaping () -> ()) {
-        _willAppearView = completion
-    }
 
-    private var _willDisappearView: (() -> ())? = nil
-    public func willDisappearView(completion: @escaping () -> ()) {
-        _willDisappearView = completion
-    }
+    public var willAppearView: (() -> ())? = nil
+//    private var _willAppearView: (() -> ())? = nil
+//    public func willAppearView(completion: @escaping () -> ()) {
+//        _willAppearView = completion
+//    }
+
+    private var willDisappearView: (() -> ())? = nil
+//    private var _willDisappearView: (() -> ())? = nil
+//    public func willDisappearView(completion: @escaping () -> ()) {
+//        _willDisappearView = completion
+//    }
     
     private var _didFinishPicking: (([YPMediaItem], Bool) -> Void)?
     public func didFinishPicking(completion: @escaping (_ items: [YPMediaItem], _ cancelled: Bool) -> Void) {
@@ -163,12 +165,12 @@ override open func viewDidLoad() {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        _willAppearView?()
+        willAppearView?()
     }
 
     open override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        _willDisappearView?()
+        willDisappearView?()
     }
     
     deinit {
