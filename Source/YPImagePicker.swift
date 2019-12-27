@@ -19,18 +19,6 @@ open class YPImagePicker: UINavigationController {
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-
-    public var willAppearView: (() -> ())? = nil
-//    private var _willAppearView: (() -> ())? = nil
-//    public func willAppearView(completion: @escaping () -> ()) {
-//        _willAppearView = completion
-//    }
-
-//    private var willDisappearView: (() -> ())? = nil
-//    private var _willDisappearView: (() -> ())? = nil
-//    public func willDisappearView(completion: @escaping () -> ()) {
-//        _willDisappearView = completion
-//    }
     
     private var _didFinishPicking: (([YPMediaItem], Bool) -> Void)?
     public func didFinishPicking(completion: @escaping (_ items: [YPMediaItem], _ cancelled: Bool) -> Void) {
@@ -162,16 +150,6 @@ override open func viewDidLoad() {
             UINavigationBar.appearance().tintColor = .ypLabel
         }
     }
-    
-//    open override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        willAppearView?()
-//    }
-//
-//    open override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        willDisappearView?()
-//    }
     
     deinit {
         print("Picker deinited 👍")
