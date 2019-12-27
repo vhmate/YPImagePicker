@@ -20,6 +20,9 @@ open class YPImagePicker: UINavigationController {
         return .portrait
     }
     
+    public func willAppear(completion: @escaping () -> Void) {}
+    public func willDisappear(completion: @escaping () -> Void) {}
+    
     private var _didFinishPicking: (([YPMediaItem], Bool) -> Void)?
     public func didFinishPicking(completion: @escaping (_ items: [YPMediaItem], _ cancelled: Bool) -> Void) {
         _didFinishPicking = completion
@@ -149,6 +152,14 @@ override open func viewDidLoad() {
         if UINavigationBar.appearance().tintColor == nil {
             UINavigationBar.appearance().tintColor = .ypLabel
         }
+    }
+    
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     deinit {
