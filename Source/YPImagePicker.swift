@@ -20,7 +20,7 @@ open class YPImagePicker: UINavigationController {
         return .portrait
     }
 
-//    public var willAppearView: (() -> ())? = nil
+    public var willAppearView: (() -> ())? = nil
 //    private var _willAppearView: (() -> ())? = nil
 //    public func willAppearView(completion: @escaping () -> ()) {
 //        _willAppearView = completion
