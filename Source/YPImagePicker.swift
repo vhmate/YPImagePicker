@@ -20,15 +20,15 @@ open class YPImagePicker: UINavigationController {
         return .portrait
     }
     
-//    private var _willAppear: (() -> Void)?
-//    public func willAppear(completion: @escaping () -> Void) {
-//        _willAppear = completion
-//    }
-//    
-//    private var _willDisappear: (() -> Void)?
-//    public func willDisappear(completion: @escaping () -> Void) {
-//        _willDisappear = completion
-//    }
+    private var _willAppearView: (() -> ())?
+    public func willAppearView(completion: @escaping () -> ()) {
+        _willAppearView = completion
+    }
+
+    private var _willDisappearView: (() -> ())?
+    public func willDisappearView(completion: @escaping () -> ()) {
+        _willDisappearView = completion
+    }
     
     private var _didFinishPicking: (([YPMediaItem], Bool) -> Void)?
     public func didFinishPicking(completion: @escaping (_ items: [YPMediaItem], _ cancelled: Bool) -> Void) {
@@ -161,15 +161,15 @@ override open func viewDidLoad() {
         }
     }
     
-//    open override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        _willAppear?()
-//    }
-//
-//    open override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        _willDisappear?()
-//    }
+    open override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        _willAppearView?()
+    }
+
+    open override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        _willDisappearView?()
+    }
     
     deinit {
         print("Picker deinited 👍")
