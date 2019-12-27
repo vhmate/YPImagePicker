@@ -161,15 +161,15 @@ override open func viewDidLoad() {
         }
     }
     
-    open override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        _willAppear?()
-    }
-    
-    open override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        _willDisappear?()
-    }
+//    open override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        _willAppear?()
+//    }
+//    
+//    open override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        _willDisappear?()
+//    }
     
     deinit {
         print("Picker deinited 👍")
