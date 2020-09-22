@@ -85,7 +85,7 @@ final class YPAssetZoomableView: UIScrollView {
             // Stored crop position in multiple selection
             if let scp173 = storedCropPosition {
                 strongSelf.applyStoredCropPosition(scp173)
-                //MARK: add update CropInfo after multiple
+                // MARK: add update CropInfo after multiple
                 updateCropInfo()
             }
         }
@@ -96,18 +96,22 @@ final class YPAssetZoomableView: UIScrollView {
 
             strongSelf.videoView.loadVideo(playerItem)
             strongSelf.videoView.play()
+            strongSelf.myDelegate?.ypAssetZoomableViewDidLayoutSubviews(strongSelf)
         }
     }
     
     public func setImage(_ photo: PHAsset,
                          mediaManager: LibraryMediaManager,
                          storedCropPosition: YPLibrarySelection?,
-                         completion: @escaping () -> Void,
+                         completion: @escaping (Bool) -> Void,
                          updateCropInfo: @escaping () -> Void) {
-        guard currentAsset != photo else { DispatchQueue.main.async { completion() }; return }
+        guard currentAsset != photo else {
+            DispatchQueue.main.async { completion(false) }
+            return
+        }
         currentAsset = photo
         
-        mediaManager.imageManager?.fetch(photo: photo) { [weak self] image, _ in
+        mediaManager.imageManager?.fetch(photo: photo) { [weak self] image, isLowResIntermediaryImage in
             guard let strongSelf = self else { return }
             
             if strongSelf.photoImageView.isDescendant(of: strongSelf) == false {
@@ -124,15 +128,15 @@ final class YPAssetZoomableView: UIScrollView {
             strongSelf.photoImageView.image = image
            
             strongSelf.setAssetFrame(for: strongSelf.photoImageView, with: image)
-        
-            completion()
-            
+                
             // Stored crop position in multiple selection
             if let scp173 = storedCropPosition {
                 strongSelf.applyStoredCropPosition(scp173)
-                //MARK: add update CropInfo after multiple
+                // add update CropInfo after multiple
                 updateCropInfo()
             }
+            
+            completion(isLowResIntermediaryImage)
         }
     }
     
@@ -142,7 +146,8 @@ final class YPAssetZoomableView: UIScrollView {
         self.zoomScale = 1
         
         // Calculating and setting the image view frame depending on screenWidth
-        let screenWidth: CGFloat = UIScreen.main.bounds.width
+        let screenWidth = YPImagePickerConfiguration.screenWidth
+        
         let w = image.size.width
         let h = image.size.height
 
