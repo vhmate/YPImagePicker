@@ -276,6 +276,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                                                                 target: self,
                                                                 action: #selector(done))
             navigationItem.rightBarButtonItem?.tintColor = YPConfig.colors.tintColor
+            navigationItem.leftBarButtonItem?.tintColor = YPConfig.colors.tintColor
 
             // Disable Next Button until minNumberOfItems is reached.
             navigationItem.rightBarButtonItem?.isEnabled =
@@ -293,7 +294,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
 
         navigationItem.rightBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
         navigationItem.rightBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .disabled)
-        navigationItem.leftBarButtonItem?.setFont(font: YPConfig.fonts.leftBarButtonFont, forState: .normal)
+        navigationItem.leftBarButtonItem?.setFont(font: YPConfig.fonts.rightBarButtonFont, forState: .normal)
     }
     
     @objc
